@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: calendar
+  namespace: united-calendar
+spec:
+  rules:
+    - host: calendar.unitedcycling.cc
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: redirect
+              servicePort: 80
+  tls:
+    - hosts:
+        - calendar.unitedcycling.cc
+      secretName: redirect-tls

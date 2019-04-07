@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redirect
+  namespace: united-calendar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redirect
+  template:
+    metadata:
+      labels:
+        app: redirect
+    spec:
+      containers:
+        - env:
+            - name: SERVER_REDIRECT_SCHEME
+              value: https
+            - name: SERVER_REDIRECT
+              value: calendar.google.com
+            - name: SERVER_REDIRECT_PATH
+              value: /calendar/embed?src=nt03olli4qc5i8s913fgou71lg%40group.calendar.google.com
+          image: schmunk42/nginx-redirect:0.5.0
+          imagePullPolicy: IfNotPresent
+          name: redirect
+          ports:
+            - containerPort: 80
+              protocol: TCP
